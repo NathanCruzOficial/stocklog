@@ -20,23 +20,18 @@ dependencies = [
     # API e servidor
     "fastapi",
     "uvicorn[standard]",
-
     # Banco de dados
     "sqlalchemy",
     "psycopg[binary]",
     "alembic",
-
     # Validação e configurações
     "pydantic",
     "pydantic-settings",
-
     # Segurança e autenticação
     "pwdlib[argon2]",
     "pyjwt",
-
     # Requisições HTTP e integrações externas
     "httpx",
-
     # Variáveis de ambiente
     "python-dotenv",
 ]
