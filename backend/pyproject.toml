@@ -1,0 +1,142 @@
+
+# ============================================================
+# STOCKLOG - CONFIGURAÇÃO DO PROJETO PYTHON
+# Arquivo: backend/pyproject.toml
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 1. METADADOS DO PROJETO
+# Informações utilizadas pelo Python e ferramentas de build.
+# ------------------------------------------------------------
+
+[project]
+name = "stocklog"
+version = "0.1.0"
+description = "Sistema de gerenciamento e controle de estoque."
+requires-python = ">=3.12"
+
+dependencies = [
+    # API e servidor
+    "fastapi",
+    "uvicorn[standard]",
+
+    # Banco de dados
+    "sqlalchemy",
+    "psycopg[binary]",
+    "alembic",
+
+    # Validação e configurações
+    "pydantic",
+    "pydantic-settings",
+
+    # Segurança e autenticação
+    "pwdlib[argon2]",
+    "pyjwt",
+
+    # Requisições HTTP e integrações externas
+    "httpx",
+
+    # Variáveis de ambiente
+    "python-dotenv",
+]
+
+
+# ------------------------------------------------------------
+# 2. DEPENDÊNCIAS DE DESENVOLVIMENTO
+# Bibliotecas utilizadas durante o desenvolvimento e testes.
+# Não são necessárias para executar a aplicação em produção.
+# ------------------------------------------------------------
+
+[dependency-groups]
+dev = [
+    # Testes
+    "pytest",
+    "pytest-cov",
+
+    # Qualidade e padronização
+    "ruff",
+
+    # Empacotamento futuro
+    # "pyinstaller",
+]
+
+
+
+# ------------------------------------------------------------
+# 3. CONFIGURAÇÃO DO PYTEST
+# Define como os testes automatizados serão executados.
+# ------------------------------------------------------------
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-ra"
+
+
+# ------------------------------------------------------------
+# 4. CONFIGURAÇÃO DO COVERAGE
+# Mede a cobertura dos testes automatizados.
+# ------------------------------------------------------------
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+omit = [
+    "app/main.py",
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 80
+
+
+# ------------------------------------------------------------
+# 5. CONFIGURAÇÃO DO RUFF
+# Verifica qualidade, organização e padronização do Python.
+# ------------------------------------------------------------
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",    # Erros de estilo
+    "F",    # Erros encontrados pelo Pyflakes
+    "I",    # Organização de imports
+    "B",    # Possíveis bugs
+    "UP",   # Atualizações de sintaxe Python
+]
+
+
+# ------------------------------------------------------------
+# 6. CONFIGURAÇÃO DO BUILD
+# Planejamento para distribuição futura do backend.
+# ------------------------------------------------------------
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+
+# ------------------------------------------------------------
+# 7. CONFIGURAÇÃO FUTURA DE EMPACOTAMENTO
+# PyInstaller será configurado separadamente em deploy/pyinstaller.
+# ------------------------------------------------------------
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["tests*", "migrations*"]
+
+# Os arquivos .spec do PyInstaller ficarão em:
+# deploy/pyinstaller/
+#
+# O Inno Setup ficará em:
+# deploy/inno-setup/
+#
+# As configurações de produção serão externas ao código-fonte.
